@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Izzy Zhang</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Izzy Zhang — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <h1>Izzy Zhang</h1>
-    <p>Portfolio coming soon :)</p>
+  <header>
+    <a class="logo" href="#">Izzy Zhang</a>
+
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Artist · Designer · Maker</p>
+      <h1>Izzy Zhang</h1>
+      <p class="intro">
+        A collection of artwork, design, and creative projects.
+      </p>
+    </section>
+
+    <section id="work" class="work">
+      <div class="section-heading">
+        <h2>Selected Work</h2>
+        <p>Art, design, experiments, and projects.</p>
+      </div>
+
+      <div class="gallery">
+        <article class="project">
+          <img src="images/hat.png" alt="Project 1" />
+          <div class="project-info">
+            <h3>Hat</h3>
+            <p>Digital Art · 2026</p>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="images/red.jpg" alt="Project 2" />
+          <div class="project-info">
+            <h3>Red</h3>
+            <p>Digital Art · 2026</p>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="images/teal.png" alt="Project 3" />
+          <div class="project-info">
+            <h3>Teal</h3>
+            <p>Design · 2026</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>About</h2>
+      <p>
+        I’m Izzy, an artist and designer interested in the intersection of
+        visual art, design, engineering, and experimentation.
+      </p>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <a href="mailto:izzapup75@gmail.com">izzapup75@gmail.com</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Izzy Zhang</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
