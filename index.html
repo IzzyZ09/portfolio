@@ -1,83 +1,1034 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Izzy Zhang — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #edfffb;
+      color: #202020;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+    }
+
+    /* ---------------- NAV ---------------- */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 18px 4vw;
+
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+
+      border-bottom: 1px solid #202020;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+    }
+
+    nav a:hover {
+      color: #ff71aa;
+    }
+
+    .nav-star {
+      color: #ff71aa;
+      font-size: 16px;
+    }
+
+    /* ---------------- HERO ---------------- */
+
+    .hero {
+      position: relative;
+      margin: 22px;
+      min-height: 72vh;
+
+      overflow: hidden;
+
+      background: #7affe2;
+      border-radius: 28px;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(255,255,255,0.58),
+          rgba(255,255,255,0.04) 55%
+        );
+    }
+
+    .hero-text {
+      position: absolute;
+      z-index: 2;
+
+      left: 5vw;
+      right: 5vw;
+      bottom: 5vw;
+    }
+
+    .hero-kicker {
+      margin-bottom: 18px;
+
+      font-size: 11px;
+      letter-spacing: 0.2em;
+    }
+
+    .hero h1 {
+      margin: 0;
+
+      font-size: clamp(76px, 14vw, 200px);
+      line-height: 0.78;
+
+      letter-spacing: -0.075em;
+      font-weight: 800;
+    }
+
+    /* ---------------- SECTION HEADINGS ---------------- */
+
+    .section {
+      padding: 90px 4vw;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+
+      padding-bottom: 15px;
+      margin-bottom: 40px;
+
+      border-bottom: 1px solid #202020;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+
+      font-size: clamp(42px, 7vw, 92px);
+      letter-spacing: -0.06em;
+      line-height: 0.9;
+    }
+
+    .section-heading span {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+
+    /* ---------------- GALLERY ---------------- */
+
+    .gallery {
+      column-count: 3;
+      column-gap: 8px;
+    }
+
+    .gallery-item {
+      position: relative;
+
+      break-inside: avoid;
+
+      margin-bottom: 8px;
+
+      cursor: zoom-in;
+      overflow: hidden;
+
+      background: #ddd;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+
+      transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.015);
+      filter: brightness(0.94);
+    }
+
+    .gallery-label {
+      position: absolute;
+
+      left: 12px;
+      bottom: 12px;
+
+      padding: 7px 10px;
+
+      background: rgba(255,255,255,0.9);
+
+      font-size: 10px;
+      letter-spacing: 0.08em;
+
+      opacity: 0;
+      transform: translateY(5px);
+
+      transition: 0.2s ease;
+    }
+
+    .gallery-item:hover .gallery-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------------- ABOUT ---------------- */
+
+    .about {
+      background: #ffffff;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+
+      gap: 7vw;
+      align-items: start;
+    }
+
+    .about-photo {
+      background: #bdfff1;
+      padding: 12px;
+
+      transform: rotate(-1deg);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: auto;
+    }
+
+    .about-text {
+      max-width: 700px;
+    }
+
+    .little-label {
+      display: inline-block;
+
+      margin-bottom: 24px;
+      padding: 8px 12px;
+
+      border: 1px solid #202020;
+      border-radius: 999px;
+
+      background: #bdfff1;
+
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+
+    .about-text p {
+      font-size: clamp(20px, 2.6vw, 32px);
+      line-height: 1.28;
+
+      letter-spacing: -0.025em;
+    }
+
+    /* ---------------- CONTACT ---------------- */
+
+    .contact {
+      padding: 120px 4vw;
+
+      background: #defff8;
+    }
+
+    .contact small {
+      letter-spacing: 0.16em;
+    }
+
+    .contact h2 {
+      max-width: 1100px;
+
+      margin: 24px 0 45px;
+
+      font-size: clamp(60px, 10vw, 150px);
+      line-height: 0.82;
+
+      letter-spacing: -0.07em;
+    }
+
+    .contact a {
+      display: inline-block;
+
+      padding-bottom: 5px;
+
+      border-bottom: 1px solid #202020;
+
+      font-size: 20px;
+    }
+
+    /* ---------------- FOOTER ---------------- */
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+
+      padding: 28px 4vw;
+
+      background: white;
+
+      font-size: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ---------------- LIGHTBOX ---------------- */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+
+      z-index: 1000;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      background: rgba(15, 15, 15, 0.94);
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      width: min(1200px, 86vw);
+      max-height: 90vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 78vh;
+
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      width: 100%;
+
+      margin-top: 14px;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+
+      color: white;
+
+      font-size: 12px;
+    }
+
+    .lightbox-title {
+      font-weight: 600;
+    }
+
+    .lightbox-info {
+      opacity: 0.65;
+    }
+
+    .lightbox-close,
+    .lightbox-arrow {
+      position: absolute;
+
+      width: 48px;
+      height: 48px;
+
+      border: none;
+      background: transparent;
+
+      color: white;
+
+      cursor: pointer;
+    }
+
+    .lightbox-close {
+      top: 20px;
+      right: 22px;
+
+      font-size: 30px;
+    }
+
+    .lightbox-arrow {
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-size: 40px;
+    }
+
+    .lightbox-prev {
+      left: 22px;
+    }
+
+    .lightbox-next {
+      right: 22px;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-arrow:hover {
+      opacity: 0.6;
+    }
+
+    /* ---------------- MOBILE ---------------- */
+
+    @media (max-width: 900px) {
+      .gallery {
+        column-count: 2;
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 16px 20px;
+      }
+
+      nav {
+        gap: 12px;
+      }
+
+      nav a {
+        font-size: 10px;
+      }
+
+      .hero {
+        margin: 10px;
+        min-height: 58vh;
+      }
+
+      .hero-text {
+        left: 25px;
+        bottom: 30px;
+      }
+
+      .hero h1 {
+        font-size: 19vw;
+      }
+
+      .section {
+        padding: 70px 15px;
+      }
+
+      .gallery {
+        column-count: 2;
+        column-gap: 5px;
+      }
+
+      .gallery-item {
+        margin-bottom: 5px;
+      }
+
+      .gallery-label {
+        display: none;
+      }
+
+      .lightbox {
+        padding: 12px;
+      }
+
+      .lightbox-content {
+        width: 92vw;
+      }
+
+      .lightbox-prev {
+        left: 4px;
+      }
+
+      .lightbox-next {
+        right: 4px;
+      }
+
+      .lightbox-caption {
+        display: block;
+      }
+
+      .lightbox-info {
+        margin-top: 5px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+
   <header>
-    <a class="logo" href="#">Izzy Zhang</a>
+    <a href="#" class="logo">IZZY ZHANG</a>
 
     <nav>
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#work">WORK</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+      <span class="nav-star">✦</span>
     </nav>
   </header>
 
+
   <main>
+
+    <!-- HERO -->
+
     <section class="hero">
-      <p class="eyebrow">Artist · Designer · Maker</p>
-      <h1>Izzy Zhang</h1>
-      <p class="intro">
-        A collection of artwork, design, and creative projects.
-      </p>
+
+      <img src="images/banner.png" alt="Izzy Zhang portfolio banner">
+
+      <div class="hero-text">
+
+        <div class="hero-kicker">
+          ART · DESIGN · OBJECTS · EXPERIMENTS
+        </div>
+
+        <h1>
+          IZZY<br>
+          ZHANG
+        </h1>
+
+      </div>
+
     </section>
 
-    <section id="work" class="work">
+
+    <!-- WORK -->
+
+    <section class="section" id="work">
+
       <div class="section-heading">
+
         <h2>Selected Work</h2>
-        <p>Art, design, experiments, and projects.</p>
+
+        <span>
+          2024—2026 ✦
+        </span>
+
       </div>
+
 
       <div class="gallery">
-        <article class="project">
-          <img src="images/hat.png" alt="Project 1" />
-          <div class="project-info">
-            <h3>Hat</h3>
-            <p>Digital Art · 2026</p>
-          </div>
-        </article>
 
-        <article class="project">
-          <img src="images/red.jpg" alt="Project 2" />
-          <div class="project-info">
-            <h3>Red</h3>
-            <p>Digital Art · 2026</p>
-          </div>
-        </article>
 
-        <article class="project">
-          <img src="images/teal.png" alt="Project 3" />
-          <div class="project-info">
-            <h3>Teal</h3>
-            <p>Design · 2026</p>
+        <!-- IMAGE 1 -->
+
+        <div
+          class="gallery-item"
+          data-title="Clarity"
+          data-info="Digital Illustration · 2025"
+        >
+
+          <img
+            src="images/clarity.jpg"
+            alt="Clarity"
+          >
+
+          <div class="gallery-label">
+            CLARITY
           </div>
-        </article>
+
+        </div>
+
+
+        <!-- IMAGE 2 -->
+
+        <div
+          class="gallery-item"
+          data-title="Project Title"
+          data-info="Oil on Canvas · 2026"
+        >
+
+          <img
+            src="images/project2.jpg"
+            alt="Project Title"
+          >
+
+          <div class="gallery-label">
+            PROJECT TITLE
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE 3 -->
+
+        <div
+          class="gallery-item"
+          data-title="Project Title"
+          data-info="Digital Art · 2026"
+        >
+
+          <img
+            src="images/project3.jpg"
+            alt="Project Title"
+          >
+
+          <div class="gallery-label">
+            PROJECT TITLE
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE 4 -->
+
+        <div
+          class="gallery-item"
+          data-title="Project Title"
+          data-info="Mixed Media · 2026"
+        >
+
+          <img
+            src="images/project4.jpg"
+            alt="Project Title"
+          >
+
+          <div class="gallery-label">
+            PROJECT TITLE
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE 5 -->
+
+        <div
+          class="gallery-item"
+          data-title="Project Title"
+          data-info="Design · 2026"
+        >
+
+          <img
+            src="images/project5.jpg"
+            alt="Project Title"
+          >
+
+          <div class="gallery-label">
+            PROJECT TITLE
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE 6 -->
+
+        <div
+          class="gallery-item"
+          data-title="Project Title"
+          data-info="Illustration · 2026"
+        >
+
+          <img
+            src="images/project6.jpg"
+            alt="Project Title"
+          >
+
+          <div class="gallery-label">
+            PROJECT TITLE
+          </div>
+
+        </div>
+
+
       </div>
+
     </section>
 
-    <section id="about" class="about">
-      <h2>About</h2>
-      <p>
-        I’m Izzy, an artist and designer interested in the intersection of
-        visual art, design, engineering, and experimentation.
-      </p>
+
+    <!-- ABOUT -->
+
+    <section class="section about" id="about">
+
+      <div class="section-heading">
+
+        <h2>About Me</h2>
+
+        <span>
+          HELLO INTERNET ☆
+        </span>
+
+      </div>
+
+
+      <div class="about-layout">
+
+        <div class="about-photo">
+
+          <img
+            src="images/about.jpg"
+            alt="Izzy Zhang"
+          >
+
+        </div>
+
+
+        <div class="about-text">
+
+          <span class="little-label">
+            ARTIST · DESIGNER · MAKER
+          </span>
+
+          <p>
+            Hi, I'm Izzy! I work across illustration,
+            painting, design, engineering, and whatever
+            other medium happens to catch my attention.
+          </p>
+
+          <p>
+            I especially like making things that feel
+            playful or strange at first glance, but have
+            something more complicated hiding underneath.
+          </p>
+
+        </div>
+
+      </div>
+
     </section>
 
-    <section id="contact" class="contact">
-      <h2>Contact</h2>
-      <a href="mailto:izzapup75@gmail.com">izzapup75@gmail.com</a>
+
+    <!-- CONTACT -->
+
+    <section class="contact" id="contact">
+
+      <small>
+        SAY HI ✦
+      </small>
+
+      <h2>
+        LET'S MAKE<br>
+        SOMETHING COOL.
+      </h2>
+
+      <a href="mailto:izzapup75@gmail.com">
+        izzapup75@gmail.com ↗
+      </a>
+
     </section>
+
   </main>
 
+
   <footer>
-    <p>© 2026 Izzy Zhang</p>
+
+    <span>
+      © 2026 IZZY ZHANG
+    </span>
+
+    <span>
+      MADE WITH TOO MANY TABS OPEN ☆
+    </span>
+
   </footer>
 
-  <script src="script.js"></script>
+
+  <!-- LIGHTBOX -->
+
+  <div
+    class="lightbox"
+    id="lightbox"
+    aria-hidden="true"
+  >
+
+    <button
+      class="lightbox-close"
+      id="lightboxClose"
+      aria-label="Close image"
+    >
+      ×
+    </button>
+
+
+    <button
+      class="lightbox-arrow lightbox-prev"
+      id="lightboxPrev"
+      aria-label="Previous image"
+    >
+      ‹
+    </button>
+
+
+    <div class="lightbox-content">
+
+      <img
+        id="lightboxImage"
+        src=""
+        alt=""
+      >
+
+      <div class="lightbox-caption">
+
+        <span
+          class="lightbox-title"
+          id="lightboxTitle"
+        ></span>
+
+        <span
+          class="lightbox-info"
+          id="lightboxInfo"
+        ></span>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="lightbox-arrow lightbox-next"
+      id="lightboxNext"
+      aria-label="Next image"
+    >
+      ›
+    </button>
+
+  </div>
+
+
+  <script>
+    const items =
+      Array.from(
+        document.querySelectorAll(".gallery-item")
+      );
+
+    const lightbox =
+      document.getElementById("lightbox");
+
+    const lightboxImage =
+      document.getElementById("lightboxImage");
+
+    const lightboxTitle =
+      document.getElementById("lightboxTitle");
+
+    const lightboxInfo =
+      document.getElementById("lightboxInfo");
+
+    const closeButton =
+      document.getElementById("lightboxClose");
+
+    const previousButton =
+      document.getElementById("lightboxPrev");
+
+    const nextButton =
+      document.getElementById("lightboxNext");
+
+
+    let currentIndex = 0;
+
+
+    function showImage(index) {
+
+      currentIndex =
+        (index + items.length) % items.length;
+
+      const item =
+        items[currentIndex];
+
+      const image =
+        item.querySelector("img");
+
+      lightboxImage.src =
+        image.src;
+
+      lightboxImage.alt =
+        image.alt;
+
+      lightboxTitle.textContent =
+        item.dataset.title || image.alt;
+
+      lightboxInfo.textContent =
+        item.dataset.info || "";
+    }
+
+
+    function openLightbox(index) {
+
+      showImage(index);
+
+      lightbox.classList.add("open");
+
+      lightbox.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      document.body.style.overflow =
+        "hidden";
+    }
+
+
+    function closeLightbox() {
+
+      lightbox.classList.remove("open");
+
+      lightbox.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      document.body.style.overflow =
+        "";
+    }
+
+
+    items.forEach(
+      function(item, index) {
+
+        item.addEventListener(
+          "click",
+          function() {
+            openLightbox(index);
+          }
+        );
+
+      }
+    );
+
+
+    previousButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.stopPropagation();
+
+        showImage(
+          currentIndex - 1
+        );
+
+      }
+    );
+
+
+    nextButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.stopPropagation();
+
+        showImage(
+          currentIndex + 1
+        );
+
+      }
+    );
+
+
+    closeButton.addEventListener(
+      "click",
+      closeLightbox
+    );
+
+
+    lightbox.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target === lightbox
+        ) {
+          closeLightbox();
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          !lightbox.classList.contains("open")
+        ) {
+          return;
+        }
+
+        if (
+          event.key === "ArrowRight"
+        ) {
+          showImage(
+            currentIndex + 1
+          );
+        }
+
+        if (
+          event.key === "ArrowLeft"
+        ) {
+          showImage(
+            currentIndex - 1
+          );
+        }
+
+        if (
+          event.key === "Escape"
+        ) {
+          closeLightbox();
+        }
+
+      }
+    );
+  </script>
+
 </body>
 </html>
