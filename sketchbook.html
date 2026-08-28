@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sketchbook — Izzy Zhang</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #edfffb;
+      color: #202020;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+    }
+
+
+    /* NAV */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 18px 4vw;
+
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+
+      border-bottom: 1px solid #202020;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+    }
+
+    nav a:hover {
+      color: #ff71aa;
+    }
+
+    .nav-star {
+      color: #ff71aa;
+    }
+
+
+    /* PAGE INTRO */
+
+    .page-intro {
+      padding: 95px 4vw 70px;
+    }
+
+    .tiny-label {
+      display: inline-block;
+
+      padding: 8px 12px;
+      margin-bottom: 30px;
+
+      border: 1px solid #202020;
+      border-radius: 999px;
+
+      background: white;
+
+      font-size: 10px;
+      letter-spacing: 0.15em;
+    }
+
+    .page-intro h1 {
+      margin: 0;
+
+      font-size: clamp(75px, 14vw, 190px);
+      line-height: 0.78;
+
+      letter-spacing: -0.075em;
+    }
+
+    .intro-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+
+      gap: 40px;
+
+      margin-top: 45px;
+      padding-top: 20px;
+
+      border-top: 1px solid #202020;
+    }
+
+    .intro-bottom p {
+      max-width: 570px;
+
+      margin: 0;
+
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .scribble {
+      font-size: 34px;
+      transform: rotate(-8deg);
+    }
+
+
+    /* GALLERY */
+
+    .gallery-section {
+      padding: 30px 4vw 100px;
+    }
+
+    .gallery {
+      column-count: 4;
+      column-gap: 7px;
+    }
+
+    .gallery-item {
+      position: relative;
+
+      break-inside: avoid;
+      margin-bottom: 7px;
+
+      overflow: hidden;
+      cursor: zoom-in;
+
+      background: #ddd;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+
+      transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.015);
+      filter: brightness(0.94);
+    }
+
+    .gallery-label {
+      position: absolute;
+
+      left: 10px;
+      bottom: 10px;
+
+      padding: 6px 9px;
+
+      background: rgba(255,255,255,0.92);
+
+      font-size: 9px;
+      letter-spacing: 0.08em;
+
+      opacity: 0;
+      transform: translateY(4px);
+
+      transition: 0.2s ease;
+    }
+
+    .gallery-item:hover .gallery-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* BACK BUTTON */
+
+    .back-section {
+      padding: 0 4vw 100px;
+    }
+
+    .back-link {
+      display: inline-block;
+
+      padding: 14px 18px;
+
+      background: white;
+
+      border: 1px solid #202020;
+      border-radius: 999px;
+
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+
+    .back-link:hover {
+      background: #bdfff1;
+    }
+
+
+    /* FOOTER */
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+
+      padding: 28px 4vw;
+
+      background: white;
+
+      font-size: 10px;
+      letter-spacing: 0.1em;
+    }
+
+
+    /* LIGHTBOX */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+
+      z-index: 1000;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      background: rgba(15,15,15,0.94);
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      width: min(1200px, 86vw);
+      max-height: 90vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 78vh;
+
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      width: 100%;
+
+      margin-top: 14px;
+
+      display: flex;
+      justify-content: space-between;
+
+      color: white;
+
+      font-size: 12px;
+    }
+
+    .lightbox-info {
+      opacity: 0.65;
+    }
+
+    .lightbox-close,
+    .lightbox-arrow {
+      position: absolute;
+
+      width: 48px;
+      height: 48px;
+
+      border: none;
+      background: transparent;
+
+      color: white;
+      cursor: pointer;
+    }
+
+    .lightbox-close {
+      top: 20px;
+      right: 22px;
+
+      font-size: 30px;
+    }
+
+    .lightbox-arrow {
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-size: 40px;
+    }
+
+    .lightbox-prev {
+      left: 22px;
+    }
+
+    .lightbox-next {
+      right: 22px;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+      .gallery {
+        column-count: 3;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      nav {
+        gap: 12px;
+      }
+
+      nav a {
+        font-size: 10px;
+      }
+
+      .page-intro {
+        padding: 70px 20px 45px;
+      }
+
+      .intro-bottom {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .gallery-section {
+        padding: 20px 10px 70px;
+      }
+
+      .gallery {
+        column-count: 2;
+        column-gap: 5px;
+      }
+
+      .gallery-item {
+        margin-bottom: 5px;
+      }
+
+      .gallery-label {
+        display: none;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+
+<header>
+
+  <a href="index.html" class="logo">
+    IZZY ZHANG
+  </a>
+
+  <nav>
+    <a href="index.html#work">WORK</a>
+    <a href="other-art.html">OTHER ART</a>
+    <a href="index.html#about">ABOUT</a>
+
+    <span class="nav-star">✦</span>
+  </nav>
+
+</header>
+
+
+
+<main>
+
+
+  <!-- INTRO -->
+
+  <section class="page-intro">
+
+    <div class="tiny-label">
+      OBSERVATION · STUDIES · EXPERIMENTS
+    </div>
+
+    <h1>
+      SKETCH<br>
+      BOOK
+    </h1>
+
+
+    <div class="intro-bottom">
+
+      <p>
+        Drawings from life, observational studies,
+        experiments, unfinished thoughts, and whatever
+        else ended up on the page.
+      </p>
+
+      <div class="scribble">
+        ✎ ♡
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- GALLERY -->
+
+  <section class="gallery-section">
+
+    <div class="gallery">
+
+
+      <!-- SKETCH 1 -->
+
+      <div
+        class="gallery-item"
+        data-title="Sketch Title"
+        data-info="Graphite · 2026"
+      >
+
+        <img
+          src="images/sketch1.jpg"
+          alt="Sketch Title"
+        >
+
+        <div class="gallery-label">
+          SKETCH TITLE
+        </div>
+
+      </div>
+
+
+
+      <!-- SKETCH 2 -->
+
+      <div
+        class="gallery-item"
+        data-title="Observational Study"
+        data-info="Charcoal · 2026"
+      >
+
+        <img
+          src="images/sketch2.jpg"
+          alt="Observational Study"
+        >
+
+        <div class="gallery-label">
+          OBSERVATIONAL STUDY
+        </div>
+
+      </div>
+
+
+
+      <!-- SKETCH 3 -->
+
+      <div
+        class="gallery-item"
+        data-title="Figure Study"
+        data-info="Graphite · 2025"
+      >
+
+        <img
+          src="images/sketch3.jpg"
+          alt="Figure Study"
+        >
+
+        <div class="gallery-label">
+          FIGURE STUDY
+        </div>
+
+      </div>
+
+
+
+      <!-- SKETCH 4 -->
+
+      <div
+        class="gallery-item"
+        data-title="Object Study"
+        data-info="Ink · 2025"
+      >
+
+        <img
+          src="images/sketch4.jpg"
+          alt="Object Study"
+        >
+
+        <div class="gallery-label">
+          OBJECT STUDY
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <div class="back-section">
+
+    <a href="index.html" class="back-link">
+      ← BACK TO SELECTED WORK
+    </a>
+
+  </div>
+
+
+</main>
+
+
+
+<footer>
+
+  <span>
+    © 2026 IZZY ZHANG
+  </span>
+
+  <span>
+    SKETCHBOOK ✎
+  </span>
+
+</footer>
+
+
+
+<!-- LIGHTBOX -->
+
+<div
+  class="lightbox"
+  id="lightbox"
+  aria-hidden="true"
+>
+
+  <button
+    class="lightbox-close"
+    id="lightboxClose"
+  >
+    ×
+  </button>
+
+
+  <button
+    class="lightbox-arrow lightbox-prev"
+    id="lightboxPrev"
+  >
+    ‹
+  </button>
+
+
+  <div class="lightbox-content">
+
+    <img
+      id="lightboxImage"
+      src=""
+      alt=""
+    >
+
+    <div class="lightbox-caption">
+
+      <span id="lightboxTitle"></span>
+
+      <span
+        class="lightbox-info"
+        id="lightboxInfo"
+      ></span>
+
+    </div>
+
+  </div>
+
+
+  <button
+    class="lightbox-arrow lightbox-next"
+    id="lightboxNext"
+  >
+    ›
+  </button>
+
+</div>
+
+
+
+<script>
+
+  const items =
+    Array.from(
+      document.querySelectorAll(".gallery-item")
+    );
+
+  const lightbox =
+    document.getElementById("lightbox");
+
+  const lightboxImage =
+    document.getElementById("lightboxImage");
+
+  const lightboxTitle =
+    document.getElementById("lightboxTitle");
+
+  const lightboxInfo =
+    document.getElementById("lightboxInfo");
+
+  let currentIndex = 0;
+
+
+  function showImage(index) {
+
+    currentIndex =
+      (index + items.length) % items.length;
+
+    const item = items[currentIndex];
+
+    const image =
+      item.querySelector("img");
+
+    lightboxImage.src =
+      image.src;
+
+    lightboxImage.alt =
+      image.alt;
+
+    lightboxTitle.textContent =
+      item.dataset.title;
+
+    lightboxInfo.textContent =
+      item.dataset.info;
+
+  }
+
+
+  function openLightbox(index) {
+
+    showImage(index);
+
+    lightbox.classList.add("open");
+
+    document.body.style.overflow =
+      "hidden";
+
+  }
+
+
+  function closeLightbox() {
+
+    lightbox.classList.remove("open");
+
+    document.body.style.overflow =
+      "";
+
+  }
+
+
+  items.forEach(
+    function(item, index) {
+
+      item.addEventListener(
+        "click",
+        function() {
+
+          openLightbox(index);
+
+        }
+      );
+
+    }
+  );
+
+
+  document
+    .getElementById("lightboxPrev")
+    .addEventListener(
+      "click",
+      function(event) {
+
+        event.stopPropagation();
+
+        showImage(currentIndex - 1);
+
+      }
+    );
+
+
+  document
+    .getElementById("lightboxNext")
+    .addEventListener(
+      "click",
+      function(event) {
+
+        event.stopPropagation();
+
+        showImage(currentIndex + 1);
+
+      }
+    );
+
+
+  document
+    .getElementById("lightboxClose")
+    .addEventListener(
+      "click",
+      closeLightbox
+    );
+
+
+  lightbox.addEventListener(
+    "click",
+    function(event) {
+
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+
+    }
+  );
+
+
+  document.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        !lightbox.classList.contains("open")
+      ) {
+        return;
+      }
+
+      if (event.key === "ArrowRight") {
+        showImage(currentIndex + 1);
+      }
+
+      if (event.key === "ArrowLeft") {
+        showImage(currentIndex - 1);
+      }
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+
+    }
+  );
+
+</script>
+
+
+</body>
+</html>
